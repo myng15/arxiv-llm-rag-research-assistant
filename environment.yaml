@@ -1,0 +1,46 @@
+name: arxiv-llm-env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.12
+  - tqdm>=4.66.5
+  - tensorboard
+  - poppler 
+  - tesseract 
+  - libmagic 
+  - pillow 
+  - lxml
+  - tiktoken
+  - pip
+
+  
+  - pip:
+    - torch==2.6.0
+    - torchvision==0.21.0
+    - setuptools<71.0.0
+    - transformers==4.50.0
+    - datasets==3.1.0
+    - accelerate==1.1.1
+    - bitsandbytes
+    - peft==0.13.2
+    - trl==0.12.1
+    - openai
+    - langchain
+    - langchain-community
+    - langchain-huggingface
+    - langchain-openai
+    - langchain-groq
+    - langchain-chroma
+    - chromadb
+    - sentence-transformers
+    - llama-index
+    - llama-index-embeddings-huggingface 
+    - llama-index-vector-stores-chroma 
+    - llama-index-llms-huggingface
+    - llama-index-llms-groq
+    - xformers
+    - "unsloth[cu124-torch260] @ git+https://github.com/unslothai/unsloth.git"
+    - unstructured[all-docs]
+    - streamlit
+    
