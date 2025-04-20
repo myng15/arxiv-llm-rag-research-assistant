@@ -68,7 +68,6 @@ if app_mode == "General Text-based RAG Query":
                 "Gemma 2 (9B) Instruct",
                 "Llama 3.1 (8B) Instruct - 4-bit quantized",
                 "Llama 3.1 (8B) Instruct",
-                #"Mistral (7B) Instruct v0.3",
                 "Gemma 3 (4B) Instruct - Fine-tuned for Q&A about ArXiv papers",
                 "Gemma 3 (4B) Instruct - Fine-tuned for Q&A in German",
                 "Llama 3.1 (8B) Instruct - Fine-tuned for Q&A about ArXiv papers",
