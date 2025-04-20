@@ -68,10 +68,11 @@ if app_mode == "General Text-based RAG Query":
                 "Gemma 2 (9B) Instruct",
                 "Llama 3.1 (8B) Instruct - 4-bit quantized",
                 "Llama 3.1 (8B) Instruct",
-                "Mistral (7B) Instruct v0.3",
-                "Gemma 3 (4B) Instruct - Fine-tuned for better Q&A about ArXiv papers",
-                "Gemma 3 (4B) Instruct - Fine-tuned for German Q&A",
-                "Llama 3.1 (8B) Instruct - Fine-tuned for German Q&A",
+                #"Mistral (7B) Instruct v0.3",
+                "Gemma 3 (4B) Instruct - Fine-tuned for Q&A about ArXiv papers",
+                "Gemma 3 (4B) Instruct - Fine-tuned for Q&A in German",
+                "Llama 3.1 (8B) Instruct - Fine-tuned for Q&A about ArXiv papers",
+                "Llama 3.1 (8B) Instruct - Fine-tuned for Q&A in German",
             ]
         )
 
@@ -191,18 +192,12 @@ elif app_mode == "Multimodal RAG Query":
                 end_time = time.time()
                 
                 # Display the context images in the result
-                def display_base64_image(base64_code, caption=None, width=200):
+                def display_base64_image(base64_code, caption=None, width=300): 
                     # Decode the base64 string and convert to image
                     image_data = base64.b64decode(base64_code) # base64 -> binary
                     image = Image.open(BytesIO(image_data)) # binary -> image
                     
-                    # Resize while maintaining aspect ratio
-                    aspect_ratio = image.height / image.width
-                    new_height = int(width * aspect_ratio)
-                    image = image.resize((width, new_height))
-
-                    # Display the image
-                    st.image(image, caption=caption, use_container_width=True)
+                    st.image(image, caption=caption, width=width)
 
                 # Answer section
                 with st.container(border=True):
@@ -229,7 +224,7 @@ elif app_mode == "Multimodal RAG Query":
 # ------------------------ END ------------------------
 
 st.markdown("---")
-st.caption("This is a prototype AI research assistant using LLMs, multimodal RAG, and Streamlit.")
+st.caption("This is a prototype AI research assistant using Large Language Models, multimodal RAG and Streamlit.")
 
 
 
