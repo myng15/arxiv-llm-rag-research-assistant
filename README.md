@@ -36,6 +36,7 @@ This project implements an agent-based, RAG-based AI research assistant prototyp
 <div align="center">
   <img src="assets/demo_1.gif" width="900" class="center"/>
 </div>
+<br><br>
 
 
 2. **Mode: Multimodal RAG Query**
@@ -98,12 +99,12 @@ Answer paper-specific queries using both textual and visual context (figures/tab
 
 Create a .env file in the root directory with the following environment variables:
 
-    ```bash
+   ```bash
     HF_TOKEN=<your-huggingface-token>
     GROQ_API_KEY=<your-groq-api-key>
     OPENAI_API_KEY=<your-openai-api-key>
     LANGCHAIN_API_KEY=<your-langchain-api-key> # generated on LangSmith (LangChain platform)
-    ```
+   ```
 
 ## Preprocessing Data and Creating VectorStoreIndex 
 
