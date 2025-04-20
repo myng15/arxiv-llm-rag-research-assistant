@@ -22,22 +22,30 @@ This project implements an agent-based, RAG-based AI research assistant prototyp
 
 ## Demo
 
-1. Retrieve top-*k* relevant arXiv papers for a general query and use their abstracts as context for generating answers - "Retrieved Context Papers" are shown with links to read in full
+1. **Mode: General Text-based RAG Query**
+
+> *Example use cases:*
+>
+> - Retrieve top-*k* relevant arXiv papers for a general query and use their abstracts (and not prior knowledge) as context for generating answers - "Retrieved Context Papers" are shown with links to read in full
+>
+> - Act as a recommender engine that searches for relevant papers to a given research topic
+>
+> - Assist in literature reviews in further ways such as fact-checking, summarization, and information extraction from scientific papers
+
 
 <div align="center">
-  <img src="assets/demo.gif" width="900" class="center"/>
+  <img src="assets/demo_1.gif" width="900" class="center"/>
 </div>
 
 
-2. Act as a recommender engine that searches for the most relevant papers to a research topic
+2. **Mode: Multimodal RAG Query**
+
+Answer paper-specific queries using both textual and visual context (figures/tables) from the PDF
 
 
-
-3. Answer paper-specific queries using both textual and visual context (figures/tables) from the PDF
-
-
-
-4. Assist in literature reviews in further ways such as fact-checking, summarization, and information extraction from scientific papers
+<div align="center">
+  <img src="assets/demo_2.gif" width="900" class="center"/>
+</div>
 
 
 ## Project Highlights
@@ -175,25 +183,6 @@ Launch the assistant with:
    ```bash
    streamlit run app.py
    ```
-
-### Available Modes:
-
-- **General Text-based RAG Query**
-*Example:*
-
-> Query: “significant advancements in federated learning”
->
-> → Retrieves relevant paper abstracts and synthesizes an answer backed by the retrieved context.
-
-
-- **Multimodal RAG Query**
-*Example:* 
-
-> Paper URL: https://arxiv.org/pdf/1706.03762 ("Attention is all you need" paper)
->
-> Query: “Explain attention mechanism”
->
-> → Retrieves relevant textual and visual content from the paper about attention mechanism and uses both as context for the response.
 
 
 ## TODOs
