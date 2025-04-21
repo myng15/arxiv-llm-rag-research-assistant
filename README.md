@@ -4,7 +4,7 @@
 # arXiv Research Assistant: Multi-Agent and Multimodal RAG with Fine-tuned LLMs
 
 
-This project implements an agent-based, RAG-based AI research assistant prototype capable of retrieving multimodal context and answering complex queries about AI-related scientific papers on [arXiv](https://www.kaggle.com/datasets/Cornell-University/arxiv). It also demonstrates an efficient fine-tuning approach of Large Language Models (LLMs) for a domain- or language-specific downstream task. The prototype employs a mix of state-of-the-art open-source tools and platforms (e.g., HuggingFace, LlamaIndex), hosted LLM APIs (e.g., OpenAI, Groq), and custom fine-tuned LLMs. It can be extended to further tasks or adapted to other domain-specific use cases. 
+This project implements an agent-based, RAG-based AI research assistant prototype capable of retrieving multimodal context and answering complex queries about AI-related scientific papers on [arXiv](https://www.kaggle.com/datasets/Cornell-University/arxiv). It also demonstrates an efficient fine-tuning approach for Large Language Models (LLMs) for a domain- or language-specific downstream task. The prototype leverages a mix of state-of-the-art open-source tools (e.g., HuggingFace, LlamaIndex) and hosted APIs (e.g., OpenAI, Groq) for LLM applications, as well as custom fine-tuned LLMs. It can be extended to further tasks or adapted to other domain-specific use cases. 
 
 
 ## Table of contents
@@ -12,11 +12,11 @@ This project implements an agent-based, RAG-based AI research assistant prototyp
 * [Demo](#demo)
 * [Project Highlights](#project-highlights)
 * [Getting Started](#getting-started)
-* [Preprocessing Data and Creating VectorStoreIndex](#data-preprocessing)
-* [Modular Multi-Agent System with a Router](#multi-agent-system-with-router)
+* [Preprocessing Data and Creating VectorStoreIndex](#preprocessing-data-and-creating-VectorStoreIndex)
+* [Modular Multi-Agent System with a Router](#modular-multi-agent-system-with-a-router)
 * [Multimodal RAG](#multimodal-rag)
-* [Fine-tuning LLMs for Domain-/Language-Specific Generation](#finetuning)
-* [Running the Streamlit App](#running-streamlit-app)
+* [Fine-tuning LLMs for Domain-/Language-Specific Generation](#fine-tuning-LLMs-for-domain-/language-specific-generation)
+* [Running the Streamlit App](#running-the-streamlit-app)
 * [TODOs](#todos)
 
 
@@ -28,9 +28,9 @@ This project implements an agent-based, RAG-based AI research assistant prototyp
 >
 > - Retrieve top-*k* relevant arXiv papers for a general query and use their abstracts (and not prior knowledge) as context for generating answers - "Retrieved Context Papers" are shown with links to read in full
 >
-> - Act as a recommender engine that searches for relevant papers to a given research topic
+> - Act as a recommender engine that searches for relevant papers for a given research topic
 >
-> - Assist in literature reviews in further ways such as fact-checking, summarization, and information extraction from scientific papers
+> - Assist in literature reviews in further ways such as code implementation, fact-checking, summarization, and information extraction from scientific papers
 
 
 <div align="center">
@@ -41,7 +41,7 @@ This project implements an agent-based, RAG-based AI research assistant prototyp
 
 2. **Mode: Multimodal RAG Query**
 
-Answer paper-specific queries using both textual and visual context (figures/tables) from the PDF
+Answer paper-specific queries using both textual and visual context (figures/tables) from the paper's PDF (loaded via arXiv URL)
 
 
 <div align="center">
@@ -70,11 +70,11 @@ Answer paper-specific queries using both textual and visual context (figures/tab
 - Python 3.12
 - PyTorch 2.6.0
 - ChromaDB
-- datasets, transformers
-- OpenAI
-- LangChain
-- LlamaIndex
-- unsloth, peft, bitsandbytes, trl (for LLM fine-tuning)
+- HuggingFace tools (`datasets`, `transformers`) and account with access token
+- OpenAI API key and `openai` package
+- LangChain ecosystem packages (see `environment.yaml`)
+- LlamaIndex ecosystem packages (see `environment.yaml`)
+- `unsloth`, `peft`, `bitsandbytes`, `trl` (for accelerated PEFT-style LLM fine-tuning)
 - Streamlit
 
 > **Note:** A GPU is also required, especially for fine-tuning LLMs.
@@ -88,7 +88,7 @@ Answer paper-specific queries using both textual and visual context (figures/tab
    git clone https://github.com/myng15/arxiv-llm-rag-research-assistant.git
    ```
 
-2. **Set up the environment**:
+2. **Set up the environment and install the required packages**:
 
    ```bash
    conda env create -f environment.yaml
@@ -97,7 +97,7 @@ Answer paper-specific queries using both textual and visual context (figures/tab
 
 3. **Configure API keys**:
 
-Create a .env file in the root directory with the following environment variables:
+Create a .env file in the root project directory with the following environment variables:
 
    ```bash
     HF_TOKEN=<your-huggingface-token>
@@ -123,7 +123,7 @@ To preprocess the dataset, run:
    python preprocess_data.py
    ```
 
-3. **Creating VectorStoreIndex**:
+3. **Create VectorStoreIndex**:
 
 To enable semantic search in our Retrieval-Augmented Generation (RAG) pipeline, we embed documents (concatenated title + abstract of each paper) and store them in a ChromaDB vector database using LlamaIndex:
 
@@ -138,14 +138,14 @@ This setup is one-time. The resulting index will be reused during retrieval.
 
 - **Query Agent:** Handles general text-based RAG queries using retrieved arXiv abstracts. Supports both pre-trained and (custom) fine-tuned LLMs for generation.
 
-- **Code Agent:** Responds to programming-related queries with code and explanations generated with models like CodeGemma.
+- **Code Agent:** Responds to programming-related queries with code and explanations generated with models like CodeGemma. 
 
 - **Router Agent:** Uses an LLM (e.g., Gemma) via LlamaIndex to classify incoming queries and route them to the appropriate agent based on task type (e.g., searching answers among arXiv papers and relationships between them vs. answering coding questions).
 
 
 ## Multimodal RAG
 
-**Multimodal Agent:** Handles detailed queries about a specific arXiv paper by analyzing both the text and figures/tables in its PDF (loaded via arXiv ID/URL). 
+**Multimodal Agent:** Handles detailed queries about a specific arXiv paper by analyzing both the text and figures/tables in its PDF (loaded via arXiv URL). 
 
 - Structured PDF parsing using [Unstructured](https://unstructured.io/)
 
@@ -153,7 +153,7 @@ This setup is one-time. The resulting index will be reused during retrieval.
 
 - Storage of multimodal summaries in ChromaDB
 
-- Construction of multimodal prompts for GPT-4o-mini and RAG pipeline with LangChain
+- Construction of multimodal prompts for GPT-4o-mini and of RAG pipeline using LangChain
 
 
 ## Fine-tuning LLMs for Domain-/Language-Specific Generation
@@ -188,6 +188,7 @@ Launch the assistant with:
 
 ## TODOs
 - [ ] Integrate in-chat memory (assistant remembering previous interactions within a session)
+- [ ] Enable streaming when generating answers
 - [ ] Enhance paper recommendation feature with citation graph-based reasoning
 - [ ] Explore LangGraph for agent orchestration
 

@@ -43,4 +43,6 @@ dependencies:
     - "unsloth[cu124-torch260] @ git+https://github.com/unslothai/unsloth.git"
     - unstructured[all-docs]
     - streamlit
+    - evaluate
+    - rouge-score
     
